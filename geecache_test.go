@@ -7,12 +7,6 @@ import (
 	"testing"
 )
 
-var db = map[string]string{
-	"Tom":  "630",
-	"Jack": "589",
-	"Sam":  "567",
-}
-
 func TestGetter(t *testing.T) {
 	var f Getter = GetterFunc(func(key string) ([]byte, error) {
 		return []byte(key), nil
@@ -25,6 +19,12 @@ func TestGetter(t *testing.T) {
 }
 
 func TestGet(t *testing.T) {
+	db := map[string]string{
+		"Tom":  "630",
+		"Jack": "589",
+		"Sam":  "567",
+	}
+
 	loadCounts := make(map[string]int, len(db))
 	g := NewGroup("scores", 2<<10, GetterFunc(func(key string) ([]byte, error) {
 		log.Println("[SlowBD] search key: ", key)
